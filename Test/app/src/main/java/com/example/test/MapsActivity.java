@@ -35,11 +35,11 @@ import org.json.JSONObject;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, PlaceSelectionListener {
     EditText txt_tim;
-    Button btn_tim ;
+    Button btn_tim;
     ImageButton btn_back;
     private GoogleMap mMap;
     String CityName = "";
-    String kinhdo ="", vido = "";
+    String kinhdo = "", vido = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +69,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //            }
 //        });
     }
-    private void AnhXa(){
+
+    private void AnhXa() {
 //        txt_tim = (EditText)findViewById(R.id.txt_tim);
 //        btn_tim = (Button)findViewById(R.id.btn_tim);
-            btn_back = (ImageButton)findViewById(R.id.btn_back);
+        btn_back = (ImageButton) findViewById(R.id.btn_back);
     }
-    private void GetLocation(String city){
-    city = city.trim();
-    city = city.replaceAll("\\s+","");
-        String url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input="+city+"&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyBE90kLZE6B5l8Ba1cPlFsCpOdJOgbWgA4";
+
+    private void GetLocation(String city) {
+        city = city.trim();
+        city = city.replaceAll("\\s+", "");
+        String url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + city + "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyBE90kLZE6B5l8Ba1cPlFsCpOdJOgbWgA4";
         RequestQueue requestQueue = Volley.newRequestQueue(MapsActivity.this);
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -93,7 +95,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     vido = jsonObjectLocation.getString("lat");
                     LatLng ct = new LatLng(Double.valueOf(vido), Double.valueOf(kinhdo));
                     mMap.addMarker(new MarkerOptions().position(ct).title(CityName));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ct,15));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ct, 15));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -101,11 +103,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MapsActivity.this,"Không tìm thấy", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapsActivity.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(stringRequest);
     }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -129,7 +132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         LatLng city = new LatLng(10.8230989, 106.6296638);
         mMap.addMarker(new MarkerOptions().position(city).title("Hồ Chí Minh, Việt Nam"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(city,15));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(city, 15));
     }
 
     // Callback khi bạn click vào item
