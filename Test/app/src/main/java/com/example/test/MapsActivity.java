@@ -25,21 +25,27 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, PlaceSelectionListener {
+import java.util.Arrays;
+import java.util.Locale;
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     EditText txt_tim;
-    Button btn_tim ;
+    Button btn_tim;
     ImageButton btn_back;
     private GoogleMap mMap;
     String CityName = "";
-    String kinhdo ="", vido = "";
+    String kinhdo = "", vido = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +55,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-//        PlaceAutocompleteFragment autocompleteFragment =
-//                (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(
-//                        R.id.place_autocomplete_fragment);
-//        autocompleteFragment.setOnPlaceSelectedListener((PlaceSelectionListener) this);
+//        Places.initialize(getApplicationContext(), "AIzaSyBE90kLZE6B5l8Ba1cPlFsCpOdJOgbWgA4");
+//        // Initialize the AutocompleteSupportFragment.
+//        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+//                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+//        // Specify the types of place data to return.
+//        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+//        // Set up a PlaceSelectionListener to handle the response.
+//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//            @Override
+//            public void onPlaceSelected(@NonNull Place place) {
+//                // remove old marker when add new marker
+//                if (marker != null) marker.remove();
+//                LatLng myLatLng = place.getLatLng();
+//                marker = mMap.addMarker(
+//                        new MarkerOptions().position(myLatLng).title(String.valueOf(place.getName())));
+//                mMap.animateCamera(CameraUpdateFactory.newLatLng(myLatLng));
+//            }
+//
+//            @Override
+//            public void onError(@NonNull Status status) {
+//
+//            }
+//        });
         AnhXa();
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,23 +85,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 onBackPressed();
             }
         });
-//        btn_tim.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String data = txt_tim.getText().toString();
-//                GetLocation(data);
-//            }
-//        });
+        btn_tim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String data = txt_tim.getText().toString();
+                GetLocation(data);
+            }
+        });
     }
-    private void AnhXa(){
-//        txt_tim = (EditText)findViewById(R.id.txt_tim);
-//        btn_tim = (Button)findViewById(R.id.btn_tim);
-            btn_back = (ImageButton)findViewById(R.id.btn_back);
+
+    private void AnhXa() {
+        txt_tim = (EditText) findViewById(R.id.txt_tim);
+        btn_tim = (Button) findViewById(R.id.btn_tim);
+        btn_back = (ImageButton) findViewById(R.id.btn_back);
     }
-    private void GetLocation(String city){
-    city = city.trim();
-    city = city.replaceAll("\\s+","");
-        String url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input="+city+"&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyBE90kLZE6B5l8Ba1cPlFsCpOdJOgbWgA4";
+
+    private void GetLocation(String city) {
+        city = city.trim();
+        city = city.replaceAll("\\s+", "");
+        String url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" + city + "&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyBE90kLZE6B5l8Ba1cPlFsCpOdJOgbWgA4";
         RequestQueue requestQueue = Volley.newRequestQueue(MapsActivity.this);
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -93,7 +119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     vido = jsonObjectLocation.getString("lat");
                     LatLng ct = new LatLng(Double.valueOf(vido), Double.valueOf(kinhdo));
                     mMap.addMarker(new MarkerOptions().position(ct).title(CityName));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ct,15));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ct, 15));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -101,11 +127,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MapsActivity.this,"Không tìm thấy", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapsActivity.this, "Không tìm thấy", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(stringRequest);
     }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -129,19 +156,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         LatLng city = new LatLng(10.8230989, 106.6296638);
         mMap.addMarker(new MarkerOptions().position(city).title("Hồ Chí Minh, Việt Nam"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(city,15));
-    }
-
-    // Callback khi bạn click vào item
-
-    @Override
-    public void onPlaceSelected(@NonNull Place place) {
-
-    }
-
-    //Lỗi
-    @Override
-    public void onError(Status status) {
-
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(city, 15));
     }
 }
