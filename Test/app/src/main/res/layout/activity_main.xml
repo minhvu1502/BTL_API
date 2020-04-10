@@ -11,15 +11,14 @@
     <TextView
         android:id="@+id/tv_hours"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
         android:text="Ngày Cập Nhật"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.532" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
         android:id="@+id/tv_country"
@@ -34,33 +33,28 @@
 
     <EditText
         android:id="@+id/txt_city"
-        android:layout_width="0dp"
+        android:layout_width="252dp"
         android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/bg_search"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:gravity="center"
         android:hint="City, State"
         android:inputType="textPersonName"
         android:textColor="@android:color/white"
-        android:textColorHint="@color/common_google_signin_btn_text_dark_focused"
-        app:layout_constraintEnd_toStartOf="@+id/btn_search"
+        android:textColorHint="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_search"
-        android:layout_width="88dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
         android:background="@android:color/holo_blue_light"
         android:gravity="center"
-        android:text="Search"
         android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_city"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -114,7 +108,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:orientation="horizontal"
         android:weightSum="3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -196,15 +190,15 @@
     <Button
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_light"
         android:text="Các Giờ Tiếp Theo"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_hours"
+        app:layout_constraintVertical_bias="0.345" />
 
     <ImageButton
         android:id="@+id/btn_location"
