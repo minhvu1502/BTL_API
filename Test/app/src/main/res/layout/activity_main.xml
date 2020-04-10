@@ -11,14 +11,12 @@
     <TextView
         android:id="@+id/tv_hours"
         android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="Ngày Cập Nhật"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
@@ -63,7 +61,6 @@
         android:id="@+id/img_weather"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +84,6 @@
         android:id="@+id/tv_line_status"
         android:layout_width="wrap_content"
         android:layout_height="37dp"
-        android:layout_marginStart="4dp"
         android:gravity="center"
 
         android:text="Trạng Thái"
@@ -195,24 +191,23 @@
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         android:background="@android:color/holo_blue_light"
         android:text="Các Giờ Tiếp Theo"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_hours"
+        app:layout_constraintVertical_bias="0.345" />
 
     <ImageButton
         android:id="@+id/btn_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.797"
-        app:layout_constraintStart_toEndOf="@+id/btn_next"
         app:srcCompat="@drawable/location" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

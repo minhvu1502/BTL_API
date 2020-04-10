@@ -53,19 +53,26 @@ public class MainActivity extends AppCompatActivity {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String city = txt_city.getText().toString();
+                 String city = txt_city.getText().toString();
+                 city = Validate_(city);
                     GetCurrentWeatherData(city);
             }
         });
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String city = txt_city.getText().toString();
+                 String city = txt_city.getText().toString();
+                 city = Validate_(city);
                 Intent intent = new Intent(MainActivity.this,Second.class);
                     intent.putExtra("city",city);
                     startActivity(intent);
             }
         });
+    }
+    private String Validate_(String data){
+        data = data.trim();
+        data = data.replaceAll("\\s+", " ");
+        return data;
     }
     public void GetCurrentWeatherData(String data){
 

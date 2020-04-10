@@ -34,7 +34,6 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".GoogleMap" />
         <activity android:name=".seven_day_forecast" />
         <activity android:name=".Second" />
         <activity android:name=".MainActivity">

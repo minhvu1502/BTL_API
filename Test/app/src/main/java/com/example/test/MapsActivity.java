@@ -1,5 +1,6 @@
 package com.example.test;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.app.DownloadManager;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -18,15 +20,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.underscore.lodash.Json;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +35,8 @@ import org.json.JSONObject;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, PlaceSelectionListener {
     EditText txt_tim;
-    Button btn_tim;
+    Button btn_tim ;
+    ImageButton btn_back;
     private GoogleMap mMap;
     String CityName = "";
     String kinhdo ="", vido = "";
@@ -47,22 +49,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 //        PlaceAutocompleteFragment autocompleteFragment =
 //                (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(
 //                        R.id.place_autocomplete_fragment);
 //        autocompleteFragment.setOnPlaceSelectedListener((PlaceSelectionListener) this);
         AnhXa();
-        btn_tim.setOnClickListener(new View.OnClickListener() {
+        btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String data = txt_tim.getText().toString();
-                GetLocation(data);
+                onBackPressed();
             }
         });
+//        btn_tim.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String data = txt_tim.getText().toString();
+//                GetLocation(data);
+//            }
+//        });
     }
     private void AnhXa(){
-        txt_tim = (EditText)findViewById(R.id.txt_tim);
-        btn_tim = (Button)findViewById(R.id.btn_tim);
+//        txt_tim = (EditText)findViewById(R.id.txt_tim);
+//        btn_tim = (Button)findViewById(R.id.btn_tim);
+            btn_back = (ImageButton)findViewById(R.id.btn_back);
     }
     private void GetLocation(String city){
     city = city.trim();
@@ -115,6 +125,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.setTrafficEnabled(true);
         mMap.setBuildingsEnabled(true);
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         // Add a marker in Sydney and move the camera
         LatLng city = new LatLng(10.8230989, 106.6296638);
         mMap.addMarker(new MarkerOptions().position(city).title("Hồ Chí Minh, Việt Nam"));
@@ -122,10 +133,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     // Callback khi bạn click vào item
+
     @Override
-    public void onPlaceSelected(Place place) {
+    public void onPlaceSelected(@NonNull Place place) {
 
     }
+
     //Lỗi
     @Override
     public void onError(Status status) {

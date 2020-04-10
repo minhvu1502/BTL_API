@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class Second extends AppCompatActivity {
         setContentView(R.layout.activity_second);
         setTitle("Các giờ tiếp theo");
         AnhXa();
-        tv_err.setVisibility(View.INVISIBLE);
+//        tv_err.setVisibility(View.INVISIBLE);
         final Intent intent = getIntent();
         city = intent.getStringExtra("city");
         if (city.equals("")){
@@ -66,7 +67,7 @@ public class Second extends AppCompatActivity {
         weather = new ArrayList<Weather>();
         customAdapter = new CustomAdapter(Second.this,weather);
         listView.setAdapter(customAdapter);
-        tv_err = (TextView)findViewById(R.id.tv_err);
+//        tv_err = (TextView)findViewById(R.id.tv_err);
     }
     private void Get3HoursData(String data){
         String url = "http://api.openweathermap.org/data/2.5/forecast?q="+data+"&units=metric&cnt=7&appid=92c6161e0d9ddd64a865f69b71a89c31";
@@ -117,8 +118,11 @@ public class Second extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                tv_err.setVisibility(View.VISIBLE);
-                tv_err.setText("Không có dữ liệu về thành phố này");
+//                ArrayList<String> arrayList = new ArrayList<String>();
+//                arrayList.add("Không có dữ liệu về thành phố này");
+//                ArrayAdapter arrayAdapter = new ArrayAdapter(Second.this, R.layout.support_simple_spinner_dropdown_item, arrayList);
+//                listView.setAdapter(arrayAdapter);
+                tv_city.setText("Không có dữ liệu cho thành phố này");
             }
         });
         requestQueue.add(stringRequest);
